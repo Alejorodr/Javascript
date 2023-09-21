@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#tituloInput,
+#notaInput,
+#colorInput,
+#buscarInput {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#agregarBtn,
+#buscarBtn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+#listaNotas {
+    list-style-type: none;
+}

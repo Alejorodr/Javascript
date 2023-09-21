@@ -6,27 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>JavaScript</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>NotApp</title>
 </head>
 
 <body>
     <section class="container">
-        <h1 class="display-1" >JavaScript</h1>
-        <h2 class="display-5">Pre-entrega 2</h2>
-        <h3 class="display-6">Aplicacion de notas</h3>
-        <script src="js/javascript.js"></script>
+        <h1 class="display-1" >NotApp</h1>
+        <h2 class="display-5">Pre-entrega 3</h2>
+        
     </section>
-    <section class="container">
+    <!-- <section class="container">
         <h4>Instrucciones:</h4>
         <ol>
             <li>Agregar nota ➕</li>
             <li>Mostrar notas 🗒️</li>
             <li>Eliminar nota ➖</li>
-            <li>Concatenar nota 🔗</li>
+            <li>Extender nota 🔗</li>
             <li>Buscar notas 🔎</li>
             <li>Salir ❌</li>
             <li>F5 para empezar 🔄️</li>
         </ol>
+    </section> -->
+    <section class="container">
+        <h1>Aplicación de Notas 🗒️</h1>
+    <input type="text" id="tituloInput" placeholder="Título de la nota 📝">
+    <textarea id="notaInput" placeholder="Contenido de la nota 📝"></textarea>
+    <input type="color" id="colorInput">
+    <button id="agregarBtn">Agregar nota ➕</button>
+    <input type="text" id="buscarInput" placeholder="Buscar en las notas 🔍">
+    <button id="buscarBtn">Buscar 🔍</button>
+    <ul id="listaNotas"></ul>
+    <script src="js/javascript.js"></script>
     </section>
 </body>
 
