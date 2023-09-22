@@ -2,23 +2,41 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#tituloInput,
-#notaInput,
-#colorInput,
-#buscarInput {
-    display: block;
-    width: 100%;
+#listaNotas {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nota {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: calc(33% - 20px);
+    box-sizing: border-box;
+}
+
+.nota-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nota-titulo {
+    margin: 0;
+}
+
+.nota-contenido {
     margin-bottom: 10px;
 }
 
-#agregarBtn,
-#buscarBtn {
-    padding: 10px 20px;
-    background-color: #4CAF50;
+.nota-editar, .nota-eliminar {
+    background-color: #007BFF;
     color: white;
     border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
-#listaNotas {
-    list-style-type: none;
+.nota-eliminar {
+    background-color: #dc3545;
 }

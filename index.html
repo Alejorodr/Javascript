@@ -3,41 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pagina de aplicacion web de notas">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="">
     <title>NotApp</title>
 </head>
 
 <body>
     <section class="container">
-        <h1 class="display-1" >NotApp</h1>
-        <h2 class="display-5">Pre-entrega 3</h2>
+        <body>
+            <div class="container">
+                <h1 class="my-4">Aplicación de Notas</h1>
+                <div class="form-group">
+                    <input type="text" id="buscarInput" class="form-control" placeholder="Buscar nota">
+                    <button id="buscarBtn" class="btn btn-secondary my-2">Buscar 🔍</button>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tituloInput" class="form-control" placeholder="Título de la nota">
+                    <textarea id="notaInput" class="form-control my-2" placeholder="Contenido de la nota"></textarea>
+                    <input type="color" id="colorInput" class="form-control my-2">
+                    <button id="agregarBtn" class="btn btn-primary">Agregar Nota ➕</button>
+                </div>
+
+                <div id="listaNotas" class="row"></div>
+            </div>
         
-    </section>
-    <!-- <section class="container">
-        <h4>Instrucciones:</h4>
-        <ol>
-            <li>Agregar nota ➕</li>
-            <li>Mostrar notas 🗒️</li>
-            <li>Eliminar nota ➖</li>
-            <li>Extender nota 🔗</li>
-            <li>Buscar notas 🔎</li>
-            <li>Salir ❌</li>
-            <li>F5 para empezar 🔄️</li>
-        </ol>
-    </section> -->
-    <section class="container">
-        <h1>Aplicación de Notas 🗒️</h1>
-    <input type="text" id="tituloInput" placeholder="Título de la nota 📝">
-    <textarea id="notaInput" placeholder="Contenido de la nota 📝"></textarea>
-    <input type="color" id="colorInput">
-    <button id="agregarBtn">Agregar nota ➕</button>
-    <input type="text" id="buscarInput" placeholder="Buscar en las notas 🔍">
-    <button id="buscarBtn">Buscar 🔍</button>
-    <ul id="listaNotas"></ul>
-    <script src="js/javascript.js"></script>
+            <!-- Agregar Bootstrap JS y jQuery -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            <script src="./js/javascript.js"></script>
     </section>
 </body>
 
