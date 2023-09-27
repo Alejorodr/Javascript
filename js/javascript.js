@@ -26,8 +26,10 @@ function agregarNota() {
     // Limpiar los campos de entrada
     tituloInput.value = '';
     notaInput.value = '';
+    colorInput.value = '#FEDC97';
 
     // Actualizar la lista de notas
+    actualizarLocalStorage();
     mostrarNotas();
 }
 
@@ -55,6 +57,7 @@ function mostrarNotas() {
         eliminarBtn.textContent = 'Eliminar ➖';
         eliminarBtn.addEventListener('click', function () {
             notas.splice(i, 1);
+            actualizarLocalStorage();
             mostrarNotas();
         });
         li.appendChild(eliminarBtn);
@@ -94,6 +97,7 @@ function buscarNota() {
         eliminarBtn.addEventListener('click', function () {
             let indice = notas.indexOf(notasEncontradas[i]);
             notas.splice(indice, 1);
+            actualizarLocalStorage();
             mostrarNotas();
         });
         li.appendChild(eliminarBtn);
@@ -129,7 +133,22 @@ function actualizarNota(indice) {
     agregarBtn.addEventListener('click', agregarNota);
 
     // Actualizar la lista de notas
+    actualizarLocalStorage();
     mostrarNotas();
+}
+
+// Función para actualizar el almacenamiento local (localStorage)
+function actualizarLocalStorage() {
+    localStorage.setItem('notas', JSON.stringify(notas));
+}
+
+// Cargar notas desde el almacenamiento local al cargar la página
+window.onload = function () {
+    let notasGuardadas = localStorage.getItem('notas');
+    if (notasGuardadas) {
+        notas = JSON.parse(notasGuardadas);
+        mostrarNotas();
+    }
 }
 
 // Agregar un controlador de eventos al botón
