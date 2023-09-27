@@ -40,8 +40,8 @@
             </div>
         </nav>
     </header>
-    <section class="container">
 
+    <section class="container">
         <body>
             <div class="container">
                 <h1 class="my-4">Notas</h1>
@@ -49,12 +49,17 @@
                 <div class="form-group">
                     <input type="text" id="tituloInput" class="form-control" placeholder="Título de la nota">
                     <textarea id="notaInput" class="form-control my-2" placeholder="Contenido de la nota"></textarea>
-                    <input type="color" id="colorInput" class="form-control my-2">
-                    <button id="agregarBtn" class="btn btn-primary">➕</button>
+                    <input type="color" id="colorInput" class="form-control form-control-color my-2" style="width: 50px; height: 50px; border-radius: 10px;" value="#FEDC97" title="Elige el color de la nota">
+                    <button id="agregarBtn" class="btn btn-outline-dark">➕</button>
                 </div>
-
-                <div id="listaNotas" class="row"></div>
             </div>
+    </section>
+    <section class="container text my-3 ">
+        <div class="row">
+            <div class="col">
+                <div id="listaNotas" class="card w-50"></div>
+            </div>
+        </div>
 
             <!-- Agregar Bootstrap JS y jQuery -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
