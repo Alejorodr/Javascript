@@ -6,16 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Pagina de aplicacion web de notas">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
+
     <link rel="stylesheet" href="./css/style.css">
     <link rel="icon" type="image/png" href="./images/post-it.png">
     <title>Fine Note App</title>
 </head>
 
-<body  class="bgcolor">
+<body class="bgcolor">
     <header>
-        
+
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <a class="navbar-brand" href="./index.html"><img src="./images/post-it.png" alt="Icono de nota"></a>
@@ -34,7 +40,8 @@
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
-                        <input id="buscarInput" class="form-control me-2" type="search" placeholder="Buscar nota" aria-label="Search">
+                        <input id="buscarInput" class="form-control me-2" type="search" placeholder="Buscar nota"
+                            aria-label="Search">
                         <button id="buscarBtn" class="btn btn-outline-primary" type="submit">🔍</button>
                     </form>
                 </div>
@@ -43,27 +50,29 @@
     </header>
 
     <section class="container">
-            <div class="container">
-                <h1 class="my-4">Notas</h1>
-                <h2>Agrega tus notas</h2>
-                <div class="form-group">
-                    <input type="text" id="tituloInput" class="form-control" placeholder="Título de la nota">
-                    <textarea id="notaInput" class="form-control my-2" placeholder="Contenido de la nota"></textarea>
-                    <input type="color" id="colorInput" class="form-control form-control-color my-2" style="width: 50px; height: 50px; border-radius: 10px;" value="#FEDC97" title="Elige el color de la nota">
-                    <button id="agregarBtn" class="btn btn-outline-dark">➕</button>
-                </div>
+        <div class="container">
+            <h1 class="my-4">Notas</h1>
+            <h2>Agrega tus notas</h2>
+            <div class="form-group">
+                <input type="text" id="tituloInput" class="form-control" placeholder="Título de la nota">
+                <textarea id="notaInput" class="form-control my-2" placeholder="Contenido de la nota"></textarea>
+                <input type="color" id="colorInput" class="form-control form-control-color my-2"
+                    style="width: 50px; height: 50px; border-radius: 10px;" value="#FEDC97"
+                    title="Elige el color de la nota">
+                <button id="agregarBtn" class="btn btn-outline-dark">➕</button>
             </div>
+        </div>
     </section>
     <section class="container text my-3 ">
-        <div class="row">
+        <div class="row" >
             <div class="col">
                 <div id="listaNotas" class="card w-50"></div>
             </div>
         </div>
 
-            <!-- Agregar Bootstrap JS y jQuery -->
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-            <script src="./js/javascript.js"></script>
+        <!-- Agregar Bootstrap JS y jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="./js/javascript.js"></script>
     </section>
 </body>
 

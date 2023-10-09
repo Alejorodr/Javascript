@@ -1,5 +1,10 @@
 // Definir notas en blanco para almacenar las notas
-let notas = [];
+let notasGuardadas = localStorage.getItem('notas');
+if (notasGuardadas) {
+    notas = JSON.parse(notasGuardadas);
+} else {
+    notas = [];
+}
 
 // Obtener referencias a los elementos HTML
 let tituloInput = document.getElementById('tituloInput');
@@ -151,6 +156,16 @@ window.onload = function () {
     }
 }
 
+//Eliminar nota
+let eliminarBtn = document.createElement('button');
+eliminarBtn.textContent = 'Eliminar ➖';
+eliminarBtn.addEventListener('click', function () {
+    notas.splice(i, 1);
+    guardarNotas();
+    mostrarNotas();
+});
+
+
 // Agregar un controlador de eventos al botón
 agregarBtn.addEventListener('click', agregarNota);
 buscarBtn.addEventListener('click', buscarNota);
@@ -168,7 +183,7 @@ function mostrarNotas() {
         let cardBody = document.createElement('div');
         cardBody.className = 'card-body';
 
-        let cardTitle = document.createElement('h5');
+        let cardTitle = document.createElement('h4');
         cardTitle.className = 'card-title';
         cardTitle.textContent = notas[i].titulo;
 
@@ -178,7 +193,7 @@ function mostrarNotas() {
 
         // Agregar botón de editar a cada nota
         let editarBtn = document.createElement('button');
-        editarBtn.textContent = 'Editar ✏️';
+        editarBtn.textContent = '✏️';
         editarBtn.className = 'btn btn-primary';
         editarBtn.addEventListener('click', function () {
             editarNota(i);
@@ -186,8 +201,8 @@ function mostrarNotas() {
 
         // Agregar botón de eliminar a cada nota
         let eliminarBtn = document.createElement('button');
-        eliminarBtn.textContent = 'Eliminar ➖';
-        eliminarBtn.className = 'btn btn-danger ml-2';
+        eliminarBtn.textContent = '➖';
+        eliminarBtn.className = 'btn btn-danger ml-5';
         eliminarBtn.addEventListener('click', function () {
             notas.splice(i, 1);
             mostrarNotas();
@@ -202,4 +217,15 @@ function mostrarNotas() {
 
         listaNotas.appendChild(card);
     }
+
+    //Toastify para notificar eventos
+    document.getElementById('agregarBtn').addEventListener('click', function() {
+        Toastify({
+            text: "¡Haz agregado una nota!",
+            duration: 3000, // Duración en milisegundos (3 segundos en este caso)
+            gravity: "bottom-right", // Posición de la notificación (puede ser "top", "bottom", "center")
+            close: true, // Mostrar botón para cerrar la notificación
+            backgroundColor: "linear(to right, #00b09b, #96c93d)", // Fondo personalizado
+        }).showToast();
+    });
 }
