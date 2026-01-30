@@ -1,231 +1,238 @@
-// Definir notas en blanco para almacenar las notas
+// Initialize notes from localStorage
+let notas = [];
 let notasGuardadas = localStorage.getItem('notas');
 if (notasGuardadas) {
-    notas = JSON.parse(notasGuardadas);
-} else {
-    notas = [];
-}
-
-// Obtener referencias a los elementos HTML
-let tituloInput = document.getElementById('tituloInput');
-let notaInput = document.getElementById('notaInput');
-let colorInput = document.getElementById('colorInput');
-let agregarBtn = document.getElementById('agregarBtn');
-let buscarInput = document.getElementById('buscarInput');
-let buscarBtn = document.getElementById('buscarBtn');
-let listaNotas = document.getElementById('listaNotas');
-
-// Función para agregar una nota
-function agregarNota() {
-    let titulo = tituloInput.value;
-    let nota = notaInput.value;
-    let color = colorInput.value;
-
-    if (titulo.trim() === '' || nota.trim() === '') {
-        alert("Por favor, ingresa un título y una nota válidos.");
-        return;
-    }
-
-    notas.push({ titulo, nota, color });
-
-    // Limpiar los campos de entrada
-    tituloInput.value = '';
-    notaInput.value = '';
-    colorInput.value = '#FEDC97';
-
-    // Actualizar la lista de notas
-    actualizarLocalStorage();
-    mostrarNotas();
-}
-
-// Función para mostrar las notas
-function mostrarNotas() {
-    // Limpiar la lista existente
-    listaNotas.innerHTML = '';
-
-    // Crear un nuevo elemento de lista para cada nota
-    for (let i = 0; i < notas.length; i++) {
-        let li = document.createElement('li');
-        li.textContent = notas[i].titulo + ": " + notas[i].nota;
-        li.style.backgroundColor = notas[i].color;
-
-        // Agregar botón de editar a cada nota
-        let editarBtn = document.createElement('button');
-        editarBtn.textContent = 'Editar ✏️';
-        editarBtn.addEventListener('click', function () {
-            editarNota(i);
-        });
-        li.appendChild(editarBtn);
-
-        // Agregar botón de eliminar a cada nota
-        let eliminarBtn = document.createElement('button');
-        eliminarBtn.textContent = 'Eliminar ➖';
-        eliminarBtn.addEventListener('click', function () {
-            notas.splice(i, 1);
-            actualizarLocalStorage();
-            mostrarNotas();
-        });
-        li.appendChild(eliminarBtn);
-
-        listaNotas.appendChild(li);
+    try {
+        notas = JSON.parse(notasGuardadas);
+    } catch (e) {
+        console.error("Error parsing notes from localStorage", e);
+        notas = [];
     }
 }
 
-// Función para buscar una nota
-function buscarNota() {
-    let busqueda = buscarInput.value;
+// DOM Elements
+const tituloInput = document.getElementById('tituloInput');
+const notaInput = document.getElementById('notaInput');
+const colorInput = document.getElementById('colorInput');
+const agregarBtn = document.getElementById('agregarBtn');
+const buscarInput = document.getElementById('buscarInput');
+const buscarBtn = document.getElementById('buscarBtn');
+const listaNotas = document.getElementById('listaNotas');
+const buttonContainer = document.getElementById('buttonContainer');
 
-    if (busqueda.trim() === '') {
-        alert("Por favor, ingresa un término de búsqueda válido.");
-        return;
-    }
-
-    let notasEncontradas = notas.filter(nota => nota.titulo.includes(busqueda) || nota.nota.includes(busqueda));
-
-    if (notasEncontradas.length === 0) {
-        alert(`No se encontraron notas que contengan "${busqueda}".`);
-        return;
-    }
-
-    // Limpiar la lista existente
-    listaNotas.innerHTML = '';
-
-    // Crear un nuevo elemento de lista para cada nota encontrada
-    for (let i = 0; i < notasEncontradas.length; i++) {
-        let li = document.createElement('li');
-        li.textContent = notasEncontradas[i].titulo + ": " + notasEncontradas[i].nota;
-        li.style.backgroundColor = notasEncontradas[i].color;
-
-        // Agregar botón de eliminar a cada nota
-        let eliminarBtn = document.createElement('button');
-        eliminarBtn.textContent = 'Eliminar ➖';
-        eliminarBtn.addEventListener('click', function () {
-            let indice = notas.indexOf(notasEncontradas[i]);
-            notas.splice(indice, 1);
-            actualizarLocalStorage();
-            mostrarNotas();
-        });
-        li.appendChild(eliminarBtn);
-
-        listaNotas.appendChild(li);
-    }
-}
-
-// Función para editar una nota
-function editarNota(indice) {
-    // Obtener la nota actual
-    let notaActual = notas[indice];
-
-    // Mostrar un formulario con los detalles actuales de la nota
-    tituloInput.value = notaActual.titulo;
-    notaInput.value = notaActual.nota;
-
-    // Cambiar el controlador del botón para que actualice la nota en lugar de añadir una nueva
-    agregarBtn.removeEventListener('click', agregarNota);
-    agregarBtn.addEventListener('click', function() {
-        actualizarNota(indice);
-    });
-}
-
-// Función para actualizar una nota
-function actualizarNota(indice) {
-    // Actualizar la nota con los nuevos detalles
-    notas[indice].titulo = tituloInput.value;
-    notas[indice].nota = notaInput.value;
-
-    // Cambiar el controlador del botón para que añada una nueva nota en lugar de actualizar la existente
-    agregarBtn.removeEventListener('click', actualizarNota);
-    agregarBtn.addEventListener('click', agregarNota);
-
-    // Actualizar la lista de notas
-    actualizarLocalStorage();
-    mostrarNotas();
-}
-
-// Función para actualizar el almacenamiento local (localStorage)
+// Helper to update localStorage
 function actualizarLocalStorage() {
     localStorage.setItem('notas', JSON.stringify(notas));
 }
 
-// Cargar notas desde el almacenamiento local al cargar la página
-window.onload = function () {
-    let notasGuardadas = localStorage.getItem('notas');
-    if (notasGuardadas) {
-        notas = JSON.parse(notasGuardadas);
-        mostrarNotas();
+// Function to show notifications using Toastify
+function notify(text, type = "success") {
+    if (typeof Toastify === "function") {
+        Toastify({
+            text: text,
+            duration: 3000,
+            gravity: "bottom",
+            position: "right",
+            style: {
+                background: type === "success" ? "linear-gradient(to right, #00b09b, #96c93d)" : "linear-gradient(to right, #ff5f6d, #ffc371)",
+            },
+            close: true,
+        }).showToast();
+    } else {
+        alert(text);
     }
 }
 
-//Eliminar nota
-let eliminarBtn = document.createElement('button');
-eliminarBtn.textContent = 'Eliminar ➖';
-eliminarBtn.addEventListener('click', function () {
-    notas.splice(i, 1);
-    guardarNotas();
-    mostrarNotas();
-});
-
-
-// Agregar un controlador de eventos al botón
-agregarBtn.addEventListener('click', agregarNota);
-buscarBtn.addEventListener('click', buscarNota);
-// Función para mostrar las notas
-function mostrarNotas() {
-    // Limpiar la lista existente
+// Function to display all notes
+function mostrarNotas(notasAMostrar = notas) {
+    if (!listaNotas) return;
     listaNotas.innerHTML = '';
 
-    // Crear una nueva tarjeta para cada nota
-    for (let i = 0; i < notas.length; i++) {
+    if (notasAMostrar.length === 0) {
+        listaNotas.innerHTML = '<p class="text-muted">No hay notas para mostrar.</p>';
+        return;
+    }
+
+    notasAMostrar.forEach((nota) => {
+        const originalIndex = notas.indexOf(nota);
+
         let card = document.createElement('div');
-        card.className = 'card';
-        card.style.backgroundColor = notas[i].color;
+        card.className = 'card mb-3 shadow-sm';
+        card.style.backgroundColor = nota.color;
 
         let cardBody = document.createElement('div');
         cardBody.className = 'card-body';
 
         let cardTitle = document.createElement('h4');
         cardTitle.className = 'card-title';
-        cardTitle.textContent = notas[i].titulo;
+        cardTitle.textContent = nota.titulo;
 
         let cardText = document.createElement('p');
         cardText.className = 'card-text';
-        cardText.textContent = notas[i].nota;
+        cardText.textContent = nota.nota;
 
-        // Agregar botón de editar a cada nota
         let editarBtn = document.createElement('button');
         editarBtn.textContent = '✏️';
-        editarBtn.className = 'btn btn-primary';
-        editarBtn.addEventListener('click', function () {
-            editarNota(i);
-        });
+        editarBtn.className = 'btn btn-sm btn-primary me-2';
+        editarBtn.title = 'Editar nota';
+        editarBtn.setAttribute('aria-label', 'Editar nota');
+        editarBtn.onclick = () => editarNota(originalIndex);
 
-        // Agregar botón de eliminar a cada nota
         let eliminarBtn = document.createElement('button');
         eliminarBtn.textContent = '➖';
-        eliminarBtn.className = 'btn btn-danger ml-5';
-        eliminarBtn.addEventListener('click', function () {
-            notas.splice(i, 1);
-            mostrarNotas();
-        });
+        eliminarBtn.className = 'btn btn-sm btn-danger';
+        eliminarBtn.title = 'Eliminar nota';
+        eliminarBtn.setAttribute('aria-label', 'Eliminar nota');
+        eliminarBtn.onclick = () => eliminarNota(originalIndex);
 
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
         cardBody.appendChild(editarBtn);
         cardBody.appendChild(eliminarBtn);
-        
+
         card.appendChild(cardBody);
-
         listaNotas.appendChild(card);
-    }
-
-    //Toastify para notificar eventos
-    document.getElementById('agregarBtn').addEventListener('click', function() {
-        Toastify({
-            text: "¡Haz agregado una nota!",
-            duration: 3000, // Duración en milisegundos (3 segundos en este caso)
-            gravity: "bottom-right", // Posición de la notificación (puede ser "top", "bottom", "center")
-            close: true, // Mostrar botón para cerrar la notificación
-            backgroundColor: "linear(to right, #00b09b, #96c93d)", // Fondo personalizado
-        }).showToast();
     });
 }
+
+// Function to add a note
+function agregarNota() {
+    if (!tituloInput || !notaInput) return;
+    let titulo = tituloInput.value.trim();
+    let nota = notaInput.value.trim();
+    let color = colorInput ? colorInput.value : '#FEDC97';
+
+    if (titulo === '' || nota === '') {
+        notify("Por favor, ingresa un título y una nota válidos.", "error");
+        return;
+    }
+
+    notas.push({ titulo, nota, color });
+    resetForm();
+    actualizarLocalStorage();
+    mostrarNotas();
+    notify("¡Has agregado una nota!");
+}
+
+// Function to delete a note
+function eliminarNota(index) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta nota?")) {
+        notas.splice(index, 1);
+        actualizarLocalStorage();
+        mostrarNotas();
+        notify("Nota eliminada correctamente.");
+    }
+}
+
+// Function to enter edit mode
+let editIndex = null;
+function editarNota(index) {
+    if (!tituloInput || !notaInput) return;
+    editIndex = index;
+    let notaActual = notas[index];
+
+    tituloInput.value = notaActual.titulo;
+    notaInput.value = notaActual.nota;
+    if (colorInput) colorInput.value = notaActual.color;
+
+    if (agregarBtn) {
+        agregarBtn.textContent = '💾';
+        agregarBtn.className = 'btn btn-success';
+        agregarBtn.title = 'Actualizar nota';
+        agregarBtn.setAttribute('aria-label', 'Actualizar nota');
+        agregarBtn.onclick = actualizarNota;
+    }
+
+    // Show cancel button if it doesn't exist
+    if (buttonContainer && !document.getElementById('cancelarBtn')) {
+        let cancelarBtn = document.createElement('button');
+        cancelarBtn.id = 'cancelarBtn';
+        cancelarBtn.textContent = '❌';
+        cancelarBtn.className = 'btn btn-outline-secondary ms-2';
+        cancelarBtn.title = 'Cancelar edición';
+        cancelarBtn.setAttribute('aria-label', 'Cancelar edición');
+        cancelarBtn.onclick = resetForm;
+        buttonContainer.appendChild(cancelarBtn);
+    }
+
+    tituloInput.focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Function to update a note
+function actualizarNota() {
+    if (!tituloInput || !notaInput) return;
+    let titulo = tituloInput.value.trim();
+    let nota = notaInput.value.trim();
+    let color = colorInput ? colorInput.value : '#FEDC97';
+
+    if (titulo === '' || nota === '') {
+        notify("Por favor, ingresa un título y una nota válidos.", "error");
+        return;
+    }
+
+    notas[editIndex] = { titulo, nota, color };
+    resetForm();
+    actualizarLocalStorage();
+    mostrarNotas();
+    notify("Nota actualizada correctamente.");
+}
+
+// Function to reset form and return to "Add" mode
+function resetForm() {
+    if (tituloInput) tituloInput.value = '';
+    if (notaInput) notaInput.value = '';
+    if (colorInput) colorInput.value = '#FEDC97';
+
+    if (agregarBtn) {
+        agregarBtn.textContent = '➕';
+        agregarBtn.className = 'btn btn-primary';
+        agregarBtn.title = 'Agregar nota';
+        agregarBtn.setAttribute('aria-label', 'Agregar nota');
+        agregarBtn.onclick = agregarNota;
+    }
+
+    let cancelarBtn = document.getElementById('cancelarBtn');
+    if (cancelarBtn) {
+        cancelarBtn.remove();
+    }
+    editIndex = null;
+}
+
+// Function to search notes
+function buscarNota(e) {
+    if (e) e.preventDefault();
+    if (!buscarInput) return;
+    let busqueda = buscarInput.value.trim().toLowerCase();
+
+    if (busqueda === '') {
+        mostrarNotas();
+        return;
+    }
+
+    let notasEncontradas = notas.filter(nota =>
+        nota.titulo.toLowerCase().includes(busqueda) ||
+        nota.nota.toLowerCase().includes(busqueda)
+    );
+
+    if (notasEncontradas.length === 0) {
+        notify(`No se encontraron notas que contengan "${busqueda}".`, "error");
+        mostrarNotas([]);
+    } else {
+        mostrarNotas(notasEncontradas);
+    }
+}
+
+// Initial Setup
+if (agregarBtn) agregarBtn.onclick = agregarNota;
+if (buscarBtn) buscarBtn.onclick = buscarNota;
+if (buscarInput) {
+    buscarInput.oninput = (e) => {
+        if (e.target.value === '') mostrarNotas();
+    };
+}
+
+// Initial load
+window.onload = () => {
+    mostrarNotas();
+};
